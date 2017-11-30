@@ -17,4 +17,5 @@ The details about my codings, ideas, lessons learnt and stories, can be found in
 ```
 
 Mo
-Bromma Stockholm Sweden 2017-Nov-30
+
+// Bromma Stockholm Sweden 2017-Nov-30
