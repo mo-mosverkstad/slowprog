@@ -72,7 +72,7 @@ class Graph:
             next_nodes = {n for n, d in dijkstra.iteritems() if d[0] != Vertex.NO_CONNECTION}
             visiting_nodes = next_nodes - visited_nodes
             #print dijkstra
-            return dijkstra
+        return dijkstra
         
     def __str__(self):
         return '\n'.join([str(v) for v in self.vertex_dict.values()])
