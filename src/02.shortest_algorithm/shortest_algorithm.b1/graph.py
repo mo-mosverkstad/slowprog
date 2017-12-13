@@ -5,6 +5,7 @@ class Vertex:
     def __init__(self, node):
         self.node = node
         self.adjacent = {}
+        self.adjacent[self] = 0
 
     def add_neighbor(self, neighbor, weight=1, dual=True):
         self.adjacent[neighbor] = weight
@@ -51,7 +52,27 @@ class Graph:
         to_vertex = self.get_vertex(to_node)
         if from_vertex is None or to_vertex is None: return Vertex.NO_CONNECTION
         else: return from_vertex.get_weight(to_vertex)
+
+    def _lookfor_shortest(self, si_node):
+        dijkstra = {}
+        for v in self.vertex_dict.values(): dijkstra[v.node] = (self.get_edge_weight(si_node, v.node), si_node)
+        #print dijkstra
+        visiting_nodes = {si_node}
+        visited_nodes = set()
+        while visiting_nodes:
+            #print visiting_nodes
+            for sn in visiting_nodes:
+                for dn in dijkstra.keys():
+                    new_weight = dijkstra[sn][0] + self.get_edge_weight(sn, dn)
+                    if  new_weight <= dijkstra[dn][0] \
+                       and new_weight < Vertex.NO_CONNECTION \
+                       and sn != dn:
+                        dijkstra[dn] = (new_weight, sn)
+            visited_nodes.update(visiting_nodes)
+            next_nodes = {n for n, d in dijkstra.iteritems() if d[0] != Vertex.NO_CONNECTION}
+            visiting_nodes = next_nodes - visited_nodes
+            #print dijkstra
+            return dijkstra
         
     def __str__(self):
         return '\n'.join([str(v) for v in self.vertex_dict.values()])
-
