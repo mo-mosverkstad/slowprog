@@ -10,7 +10,7 @@ def test_graph(graph_item):
     for v in vertices: graph.add_vertex(v)
     for e in edges: graph.add_edge(e[0], e[1])
     print graph
-    print graph.get_edge_weight(0,3)
+    print graph._lookfor_shortest(0)
 
 
 test_graph(graph_data['skynet01'])
