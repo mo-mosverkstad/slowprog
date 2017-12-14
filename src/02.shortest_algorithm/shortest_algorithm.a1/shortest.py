@@ -12,7 +12,7 @@ def lookfor_shortest(si, ei, skynet_map):
                 #print 'si=%d, sn=%d, dn=%d'%(si, sn, dn)
                 #print '-- si->sn:%d, sn->dn:%d, si->dn:%d'%(weight[sn][0], skynet_map[sn][dn], weight[dn][0])
                 if (weight[sn][0] + skynet_map[sn][dn] <= weight[dn][0]) \
-                   and ([sn][0] + skynet_map[sn][dn] < MAX_VALUE) \
+                   and (weight[sn][0] + skynet_map[sn][dn] < MAX_VALUE) \
                    and sn != dn:
                     weight[dn] = (weight[sn][0] + skynet_map[sn][dn], sn)
         visited_nodes.update(visiting_nodes)
