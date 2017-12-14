@@ -73,6 +73,16 @@ class Graph:
             visiting_nodes = next_nodes - visited_nodes
             #print dijkstra
         return dijkstra
-        
+
+    def get_shortest_path(self, si_node, ei_node):
+        dijkstra = self._lookfor_shortest(si_node)
+        weight, previous_node = dijkstra[ei_node]
+        path = [ei_node]
+        while previous_node != si_node:
+            path.insert(0, previous_node)
+            previous_node = dijkstra[previous_node][1]
+        path.insert(0, previous_node)
+        return (weight, path)
+
     def __str__(self):
         return '\n'.join([str(v) for v in self.vertex_dict.values()])
