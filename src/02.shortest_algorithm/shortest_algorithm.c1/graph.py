@@ -1,0 +1,106 @@
+#!/usr/bin/env python
+
+from color import ColorPool
+
+class Vertex:
+    NO_CONNECTION = 999
+    def __init__(self, node):
+        self.node = node
+        self.adjacent = {}
+        self.adjacent[self] = 0
+        self.color = None
+
+    def add_neighbor(self, neighbor, weight=1, dual=True):
+        self.adjacent[neighbor] = weight
+        if dual: neighbor.add_neighbor(self, weight, False)
+
+    def get_neighbors(self):
+        return self.adjacent.keys()
+
+    def get_weight(self, neighbor):
+        return self.adjacent.get(neighbor, Vertex.NO_CONNECTION)
+
+    def __str__(self):
+        return '%s: adjacents: %s'%(self.node, str([v.node for v in self.adjacent.keys()]))
+
+class Graph:
+    def __init__(self):
+        self.vertex_dict = {}
+        self.vertex_number = 0
+
+    def __iter__(self):
+        return iter(self.vertex_dict.values())
+
+    def add_vertex(self, node):
+        self.vertex_number += 1
+        self.vertex_dict[node] = Vertex(node)
+        return self.get_vertex(node)
+
+    def get_vertex(self, node):
+        return self.vertex_dict.get(node, None)
+
+    def get_vertex_number(self):
+        return self.vertex_number
+
+    def get_vertices(self):
+        return self.vertex_dict.values()
+
+    def add_edge(self, from_node, to_node, weight=1, dual=True):
+        from_vertex = self.get_vertex(from_node) if self.get_vertex(from_node) != None else self.add_vertex(from_node)
+        to_vertex = self.get_vertex(to_node) if self.get_vertex(to_node) != None else self.add_vertex(to_node)
+        from_vertex.add_neighbor(to_vertex, weight, dual)
+
+    def get_edge_weight(self, from_node, to_node):
+        from_vertex = self.get_vertex(from_node)
+        to_vertex = self.get_vertex(to_node)
+        if from_vertex is None or to_vertex is None: return Vertex.NO_CONNECTION
+        else: return from_vertex.get_weight(to_vertex)
+
+    # look for the shortest path
+    def _lookfor_shortest(self, si_node):
+        dijkstra = {}
+        for v in self.vertex_dict.values(): dijkstra[v.node] = (self.get_edge_weight(si_node, v.node), si_node)
+        #print dijkstra
+        visiting_nodes = {si_node}
+        visited_nodes = set()
+        while visiting_nodes:
+            #print visiting_nodes
+            for sn in visiting_nodes:
+                for dn in dijkstra.keys():
+                    new_weight = dijkstra[sn][0] + self.get_edge_weight(sn, dn)
+                    if  new_weight <= dijkstra[dn][0] \
+                       and new_weight < Vertex.NO_CONNECTION \
+                       and sn != dn:
+                        dijkstra[dn] = (new_weight, sn)
+            visited_nodes.update(visiting_nodes)
+            next_nodes = {n for n, d in dijkstra.iteritems() if d[0] != Vertex.NO_CONNECTION}
+            visiting_nodes = next_nodes - visited_nodes
+            #print dijkstra
+        return dijkstra
+
+    def get_shortest_path(self, si_node, ei_node):
+        dijkstra = self._lookfor_shortest(si_node)
+        weight, previous_node = dijkstra[ei_node]
+        path = [ei_node]
+        while previous_node != si_node:
+            path.insert(0, previous_node)
+            previous_node = dijkstra[previous_node][1]
+        path.insert(0, previous_node)
+        return (weight, path)
+
+    # Paint the graph using 4 colors
+    def paint_vertex(self, vertex, pool):
+        color_used = {n.color for n in vertex.get_neighbors() if n.color != None}
+        vertex.color = pool.pickup(color_used)
+        
+    def paint_graph(self):
+        pool = ColorPool()
+        for v in self.vertex_dict.values(): self.paint_vertex(v, pool)
+        return '\n'.join(['Vertex: %s -> color: %s'%(v.node, v.color) for v in self.vertex_dict.values()]) \
+               + '\n' + str(pool) + '\n' + '='*80
+            
+                
+    
+    def __str__(self):
+        return '\n'.join([str(v) for v in self.vertex_dict.values()])
+
