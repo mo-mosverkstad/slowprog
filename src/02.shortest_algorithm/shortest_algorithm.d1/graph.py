@@ -4,7 +4,7 @@ class Vertex:
     def __init__(self, key, vertex_property=None, self_edge_property=None):
         self.key = key
         self.neighbors = {}
-        self.neighbors[key] = Edge(key, key, self_edge_property)
+        if self_edge_property: self.neighbors[key] = Edge(key, key, self_edge_property)
         self.property = vertex_property
 
     def add_neighbor(self, neighbor_key, edge):
