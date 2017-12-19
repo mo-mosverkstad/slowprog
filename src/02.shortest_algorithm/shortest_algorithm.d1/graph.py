@@ -72,6 +72,7 @@ class Graph:
         edge = Edge(from_vertex_key, to_vertex_key, edge_property)
         self.vertex_dict[from_vertex_key].add_neighbor(to_vertex_key, edge)
         if not self.digraph: self.vertex_dict[to_vertex_key].add_neighbor(from_vertex_key, edge)
+        return edge
 
     def add_edges(self, edge_list):
         for e in edge_list: self.add_edge(*e)
