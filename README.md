@@ -11,6 +11,8 @@ src                           // all of the python source coding files which hav
     +-- 02.reversed_cypher
     ...
     ...
+javaCode
+    +-- leetcode  //Java code implementation to leetcode exercise.
 README.md // readme
 
 The details about my codings, ideas, lessons learnt and stories, can be found in the wiki of this repository.
