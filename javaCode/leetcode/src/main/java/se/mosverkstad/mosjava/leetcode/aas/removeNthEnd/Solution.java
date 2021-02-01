@@ -1,11 +1,13 @@
 package se.mosverkstad.mosjava.leetcode.aas.removeNthEnd;
 
+import se.mosverkstad.mosjava.leetcode.helper.ListNode;
+
 public class Solution {
-	public ListNode removeNthFromEnd(ListNode head, int n) {
-		ListNode current = head, previous = head;
+	public ListNode<Integer> removeNthFromEnd(ListNode<Integer> head, int n) {
+		ListNode<Integer> current = head, previous = head;
 		for (int i = 0; i < n && current != null; i++) current = current.next;
 		if (current == null) {
-			ListNode deletedNode = head;
+			ListNode<Integer> deletedNode = head;
 			head = head.next;
 			deletedNode.next = null;
 		} else {
@@ -13,7 +15,7 @@ public class Solution {
 				current = current.next;
 				previous = previous.next;
 			}
-			ListNode deletedNode = previous.next;
+			ListNode<Integer> deletedNode = previous.next;
 			previous.next = deletedNode.next;
 			deletedNode.next = null;
 		}
