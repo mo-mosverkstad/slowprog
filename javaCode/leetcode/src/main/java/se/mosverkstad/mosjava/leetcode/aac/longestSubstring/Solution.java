@@ -11,7 +11,9 @@ public class Solution {
 		for (int i = 0; i < string.length(); i++) {
 			Character currentChar = string.charAt(i);
 			if (window.containsKey(currentChar)) {
-				leftIndex = window.get(currentChar) + 1;
+				final Integer currentCharPos = window.get(currentChar);
+				leftIndex = currentCharPos + 1;
+				window.entrySet().removeIf(entry -> entry.getValue() < currentCharPos);
 			}
 			windowSize = i - leftIndex + 1;
 			window.put(currentChar, i);

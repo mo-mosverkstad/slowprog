@@ -17,4 +17,8 @@ public class SolutionTest extends TestCase {
 	public void testSolution03() {
 		Assert.assertEquals(3, solution.lengthOfLongestSubstring("pwwkew"));
 	}
+	
+	public void testSolution04() {
+		Assert.assertEquals(10, solution.lengthOfLongestSubstring("pwabcwdefghiepabk"));
+	}
 }
