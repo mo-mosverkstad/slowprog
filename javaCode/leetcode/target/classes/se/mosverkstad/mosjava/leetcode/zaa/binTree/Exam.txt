@@ -1,0 +1,13 @@
+Completed binary tree
+
+Please generate a completed binary tree by the specified integer array, and traverse it in inorder (left child, parent, right parent)
+
+For example:
+Input array: 0, 1, 2, 3, 4, 5, 6, 7
+The completed binary tree should be generated as:
+    1
+  2   3
+ 3 4 5 6
+7
+
+Output of inorder traversing: 7,3,1,4,0,5,2,6,

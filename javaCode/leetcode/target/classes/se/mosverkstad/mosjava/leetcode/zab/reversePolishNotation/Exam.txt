@@ -1,0 +1,26 @@
+Reverse Polish notation
+
+Convert the normal math expression to Reverse Polish notation.
+
+In this math expression, there are only 7 operators supported:
+- add (+)
+- subtract (-)
+- multiply (*)
+- divide (/)
+- leftover (%)
+- left bracket (()
+- right bracket ())
+The priorities of these operators are:
+- highest priority: left bracket (() and right bracket ())
+- 2nd priority: multiply (*), divide (/) and leftover (%)
+- 3rd priority: add (+) and subtract (-)
+
+About the Reverse Polish notation, please refer: https://en.wikipedia.org/wiki/Reverse_Polish_notation
+
+Example 1:
+input: 1+2*3-4*5-6+7*8-9
+output: 123*+45*-6-78*+9-
+
+Example 2:
+input: 6*(5+(2+3)*8+3)
+output: 6523+8*+3+*
